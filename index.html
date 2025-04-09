@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPL Returns Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome to SPL Returns</h2>
+                <p>Please login to continue</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="login-button">Login</button>
+            </form>
+            <div class="form-footer">
+                <p>By logging in, you agree to our <a href="#">Terms & Conditions</a></p>
+                <p>First time user? You'll need to change your password after login.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="app-container" id="appContainer" style="display: none;">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="https://via.placeholder.com/180x60?text=SPL+Logo" alt="SPL Logo">
+            </div>
+            <div class="nav-menu">
+                <div class="nav-item active" onclick="showSection('chat')">
+                    <i class="fas fa-comment-dots"></i>
+                    <span>Returns Assistant</span>
+                </div>
+                <div class="nav-item" onclick="showSection('dashboard')">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>My Returns</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-file-invoice"></i>
+                    <span>Documents</span>
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar" id="userAvatar">JD</div>
+                <div>
+                    <div id="userName">John Doe</div>
+                    <div style="font-size: 12px; color: #666;">Customer</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div class="page-title" id="pageTitle">Returns Assistant</div>
+                <div class="user-actions">
+                    <div class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-badge">3</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-container" id="chatSection">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i>
+                    <span>SPL Returns Assistant</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Type your message here...">
+                    <button class="send-button" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="dashboard" id="dashboardSection">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-clock" style="color: var(--warning);"></i>
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Pending Returns</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Completed Returns</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Rejected Returns</div>
+                    </div>
+                </div>
+                
+                <div class="returns-list">
+                    <h3>Recent Returns</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SAPC #</th>
+                                <th>Date</th>
+                                <th>Part Number</th>
+                                <th>Qty</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SAPC-2023-0456</td>
+                                <td>2023-06-15</td>
+                                <td>SPL-5000</td>
+                                <td>1</td>
+                                <td>Wrong part supplied</td>
+                                <td><span class="status-badge status-approved">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td>SAPC-2023-0457</td>
+                                <td>2023-06-18</td>
+                                <td>SPL-7002</td>
+                                <td>2</td>
+                                <td>Item faulty (DOA)</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>SAPC-2023-0458</td>
+                                <td>2023-06-20</td>
+                                <td>SPL-3001</td>
+                                <td>1</td>
+                                <td>Order cancelled</td>
+                                <td><span class="status-badge status-rejected">Rejected</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="document-preview" id="documentPreview">
+                <div class="document-header">
+                    <h3>SAPC Return Form</h3>
+                    <div class="document-actions">
+                        <button class="print-button" onclick="printDocument()">
+                            <i class="fas fa-print"></i> Print
+                        </button>
+                        <button class="download-button" onclick="downloadDocument()">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                    </div>
+                </div>
+                <div id="documentContent">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/main.js"></script>
+</body>
+</html>
